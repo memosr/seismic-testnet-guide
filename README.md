@@ -1,8 +1,8 @@
-# 🌊 Seismic Testnet — Encrypted Smart Contract Deploy Rehberi
+#  Seismic Testnet — Encrypted Smart Contract Deploy Rehberi
 
 Seismic, **şifreli (encrypted) akıllı kontratlar** için tasarlanmış, EVM uyumlu bir Layer 1 blockchain'dir. Bu rehber, Seismic Testnet üzerinde **kendi şifreli kontratını deploy etmeyi** adım adım anlatır — fintech, gizli oylama, gizli DeFi gibi use case'lerin temeli.
 
-## 🎯 Bu Rehberde Ne Yapacaksın?
+##  Bu Rehberde Ne Yapacaksın?
 
 - ✅ macOS'ta Seismic dev araçlarını (sforge, sanvil, scast) kuracaksın
 - ✅ Yeni bir dev wallet üreteceksin
@@ -13,7 +13,7 @@ Seismic, **şifreli (encrypted) akıllı kontratlar** için tasarlanmış, EVM u
 
 **Sonuç:** ~10 dakikada 6 on-chain transaction, encrypted smart contract deneyimi.
 
-## 🔬 Kanıt — Bu Rehberin Çıktısı
+##  Kanıt — Bu Rehberin Çıktısı
 
 | Bilgi | Değer |
 |---|---|
@@ -29,7 +29,7 @@ Seismic, **şifreli (encrypted) akıllı kontratlar** için tasarlanmış, EVM u
 - **Disk alanı:** ~500 MB
 - **Süre:** İlk kurulum 30 dk, deploy 15 dk
 
-## 🛠️ Adım 1 — Sistem Kontrolü
+##  Adım 1 — Sistem Kontrolü
 
 Terminalde mevcut araçları kontrol et:
 
@@ -42,7 +42,7 @@ echo "=== Bun ===" && bun --version 2>/dev/null || echo "❌ YOK"
 
 Eksik olanlar varsa Adım 2-3'te kuracağız.
 
-## 🦀 Adım 2 — Rust Kurulumu
+##  Adım 2 — Rust Kurulumu
 
 Rust, Seismic'in custom Foundry'sini compile etmek için gerekli.
 
@@ -59,7 +59,7 @@ source "$HOME/.cargo/env"
 rustc --version && cargo --version
 ```
 
-## ⚡ Adım 3 — Seismic Foundry (sfoundryup) Kurulumu
+##  Adım 3 — Seismic Foundry (sfoundryup) Kurulumu
 
 Seismic'in özel Foundry araç setini yükleyen yükleyici.
 
@@ -86,7 +86,7 @@ sfoundryup
 
 > ⚠️ **Sudo şifresi sorabilir** — `ssolc` (Seismic Solidity compiler) `/usr/local/bin/` dizinine kurulduğu için Mac kullanıcı şifreni isteyecek.
 
-## 📦 Adım 4 — try-devnet Repo'sunu Klonla
+##  Adım 4 — try-devnet Repo'sunu Klonla
 
 Seismic'in resmi örnek kontratlarını içeren repo:
 
@@ -96,7 +96,7 @@ git clone --recurse-submodules https://github.com/SeismicSystems/try-devnet.git
 cd try-devnet
 ```
 
-> 🔥 **Önemli — Config Güncelleme Gerek:** Bu repo'daki `config.sh` dosyası **eski devnet URL'lerini** kullanıyor. Yeni testnet için güncelleyelim.
+>  **Önemli — Config Güncelleme Gerek:** Bu repo'daki `config.sh` dosyası **eski devnet URL'lerini** kullanıyor. Yeni testnet için güncelleyelim.
 
 ```bash
 cat > config.sh << 'EOF'
@@ -108,7 +108,7 @@ EXPLORER_URL="https://seismic-testnet.socialscan.io"
 EOF
 ```
 
-## 🔑 Adım 5 — Kalıcı Dev Wallet Üret
+##  Adım 5 — Kalıcı Dev Wallet Üret
 
 `try-devnet/packages/contract/script/deploy.sh` her seferinde **yeni** cüzdan üretiyor. Bu yüzden faucet'ten alınan tokenler kaybolur. Kalıcı bir cüzdan yapacağız.
 
@@ -139,7 +139,7 @@ Nano editörü açılınca **private key'i yapıştır**, sonra `Ctrl+O` → `En
 chmod 600 ~/.seismic-wallet/dev.key
 ```
 
-## 🚰 Adım 6 — Faucet'ten SIZE Al
+##  Adım 6 — Faucet'ten SIZE Al
 
 Tarayıcıdan: **https://faucet.seismictest.net/**
 
@@ -148,7 +148,7 @@ Tarayıcıdan: **https://faucet.seismictest.net/**
 3. "Request Tokens" butonuna bas
 4. **10 SIZE** düşecek
 
-> ⏳ **Cooldown:** Her cüzdan için **24 saatte 1 kez** talep edebilirsin.
+>  **Cooldown:** Her cüzdan için **24 saatte 1 kez** talep edebilirsin.
 
 Doğrulama:
 
@@ -158,9 +158,9 @@ scast balance <CÜZDAN_ADRESİN> --rpc-url https://testnet-1.seismictest.net/rpc
 
 `10000000000000000000` (10 × 10^18 wei = 10 SIZE) görmelisin.
 
-> 🐛 **Yaygın Hata — RPC URL:** Eski docs'ta `gcp-1.seismictest.net` URL'i geçiyor, **çalışmıyor** (balance 0 dönüyor). Doğrusu: `testnet-1.seismictest.net/rpc`
+>  **Yaygın Hata — RPC URL:** Eski docs'ta `gcp-1.seismictest.net` URL'i geçiyor, **çalışmıyor** (balance 0 dönüyor). Doğrusu: `testnet-1.seismictest.net/rpc`
 
-## ⚙️ Adım 7 — Deploy Script'ini Modifiye Et
+##  Adım 7 — Deploy Script'ini Modifiye Et
 
 `try-devnet/packages/contract/script/deploy.sh` script'i her seferinde yeni cüzdan üretiyor. Bizim kalıcı cüzdanı kullanacak şekilde düzenleyelim.
 
@@ -234,7 +234,7 @@ print_success "Success. You just deployed your first contract on Seismic!"
 EOF
 ```
 
-## 🚀 Adım 8 — Deploy!
+##  Adım 8 — Deploy!
 
 ```bash
 bash script/deploy.sh
@@ -255,9 +255,9 @@ Transaction Hash: 0x...
 Contract Link: https://seismic-testnet.socialscan.io/address/0x...
 ```
 
-🎉 Kontratın canlı! Explorer linkine tıkla, ziyaret et.
+ Kontratın canlı! Explorer linkine tıkla, ziyaret et.
 
-## 🔢 Adım 9 — Counter Kontratı Anlamak
+##  Adım 9 — Counter Kontratı Anlamak
 
 Deploy ettiğin `Counter.sol` kontratı şu yapıda:
 
@@ -280,7 +280,7 @@ contract Counter {
 
 **Anahtar nokta:** `suint256` Seismic'in **shielded uint** tipidir. Standart `uint256`'ya `s` prefix'i eklenince blockchain üzerinde **şifreli** depolanır. Kimse ne `number`'ı görebilir ne de `increment`'lerin değerini.
 
-## 🔁 Adım 10 — Şifreli Etkileşim
+##  Adım 10 — Şifreli Etkileşim
 
 Değişkenleri ayarla:
 
@@ -296,7 +296,7 @@ RPC=https://testnet-1.seismictest.net/rpc
 scast send --rpc-url $RPC --private-key $PRIVKEY $CONTRACT "increment(suint256)" 1
 ```
 
-> 🐛 **Yaygın Hata:** `increment(uint256)` yazarsan **revert** alırsın. Doğrusu **`increment(suint256)`** — shielded type.
+>  **Yaygın Hata:** `increment(uint256)` yazarsan **revert** alırsın. Doğrusu **`increment(suint256)`** — shielded type.
 
 4 increment daha (toplam 5):
 
@@ -307,7 +307,7 @@ for i in 1 2 3 4; do
 done
 ```
 
-## 🪄 Adım 11 — Şifreyi Aç!
+##  Adım 11 — Şifreyi Aç!
 
 Threshold (5) aşıldı, `getNumber()` artık çalışmalı:
 
@@ -321,9 +321,9 @@ scast call --rpc-url $RPC $CONTRACT "getNumber()(uint256)"
 5
 ```
 
-🎊 **İşte bu!** 5 increment yaptın, blockchain hiçbirinin değerini bilmiyor, ama toplam **doğru** çıktı. Bu Seismic'in encrypted state mekanizmasının kanıtı.
+ **İşte bu!** 5 increment yaptın, blockchain hiçbirinin değerini bilmiyor, ama toplam **doğru** çıktı. Bu Seismic'in encrypted state mekanizmasının kanıtı.
 
-## 🐛 Sık Karşılaşılan Hatalar
+##  Sık Karşılaşılan Hatalar
 
 | Hata | Çözüm |
 |---|---|
@@ -337,12 +337,12 @@ scast call --rpc-url $RPC $CONTRACT "getNumber()(uint256)"
 ## 🔗 Faydalı Linkler
 
 - 🌐 **Seismic Resmi:** https://www.seismic.systems
-- 📚 **Dökümantasyon:** https://docs.seismic.systems
-- 🛠️ **GitHub:** https://github.com/SeismicSystems
-- 💬 **Discord:** https://discord.gg/XSPNseXCvW
-- 🐦 **X (Twitter):** https://x.com/SeismicSys
-- 🚰 **Faucet:** https://faucet.seismictest.net
-- 🔍 **Explorer:** https://seismic-testnet.socialscan.io
+- 🌐 **Dökümantasyon:** https://docs.seismic.systems
+- 🌐 **GitHub:** https://github.com/SeismicSystems
+- 🌐 **Discord:** https://discord.gg/XSPNseXCvW
+- 🌐 **X (Twitter):** https://x.com/SeismicSys
+- 🌐 **Faucet:** https://faucet.seismictest.net
+- 🌐 **Explorer:** https://seismic-testnet.socialscan.io
 
 ## 📜 Lisans
 
