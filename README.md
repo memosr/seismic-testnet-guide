@@ -1,5 +1,10 @@
 #  Seismic Testnet — Encrypted Smart Contract Deploy Rehberi
 
+[![Network](https://img.shields.io/badge/network-Seismic%20Testnet-purple)](https://docs.seismic.systems)
+[![Chain ID](https://img.shields.io/badge/chain%20id-5124-blue)](https://seismic-testnet.socialscan.io)
+[![Language](https://img.shields.io/badge/lang-Türkçe-red)](https://github.com/memosr/seismic-testnet-guide)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 Seismic, **şifreli (encrypted) akıllı kontratlar** için tasarlanmış, EVM uyumlu bir Layer 1 blockchain'dir. Bu rehber, Seismic Testnet üzerinde **kendi şifreli kontratını deploy etmeyi** adım adım anlatır — fintech, gizli oylama, gizli DeFi gibi use case'lerin temeli.
 
 ##  Bu Rehberde Ne Yapacaksın?
@@ -15,11 +20,14 @@ Seismic, **şifreli (encrypted) akıllı kontratlar** için tasarlanmış, EVM u
 
 ##  Kanıt — Bu Rehberin Çıktısı
 
-| Bilgi | Değer |
-|---|---|
-| **Network** | Seismic Testnet (Chain ID: 5124) |
-| **Deploy Edilen Kontrat** | `0xBc6a061A02F46dA8E075b22461EA7699ECb3e87F` |
-| **Explorer Linki** | [seismic-testnet.socialscan.io](https://seismic-testnet.socialscan.io/address/0xBc6a061A02F46dA8E075b22461EA7699ECb3e87F) |
+Bu rehberi takip ederek **2 farklı şifreli kontrat** deploy edildi ve **18+ on-chain transaction** ile etkileşim doğrulandı:
+
+| Kontrat | Adres | Threshold | Explorer |
+|---|---|---|---|
+| **Counter #1** | `0xBc6a061A02F46dA8E075b22461EA7699ECb3e87F` | 5 | [Görüntüle](https://seismic-testnet.socialscan.io/address/0xBc6a061A02F46dA8E075b22461EA7699ECb3e87F) |
+| **Counter #2** | `0x3561cF5EB9e2307Ead367E71cdCDdE121D463DA1` | 10 | [Görüntüle](https://seismic-testnet.socialscan.io/address/0x3561cF5EB9e2307Ead367E71cdCDdE121D463DA1) |
+
+**Network:** Seismic Testnet (Chain ID: `5124`) · **RPC:** `https://testnet-1.seismictest.net/rpc`
 
 ## 📋 Ön Gereksinimler
 
@@ -325,14 +333,20 @@ scast call --rpc-url $RPC $CONTRACT "getNumber()(uint256)"
 
 ##  Sık Karşılaşılan Hatalar
 
-| Hata | Çözüm |
-|---|---|
-| `Address not funded` | Faucet'ten SIZE iste, 24h cooldown'a dikkat |
-| `scast balance 0` (testnet-1) | RPC URL'i `testnet-1.seismictest.net/rpc` olmalı |
-| `Failed to estimate gas` | Fonksiyon tipi yanlış — `uint256` değil `suint256` kullan |
-| `command not found: sfoundryup` | `source ~/.zshenv` çalıştır |
-| `libusb not found` warning | Hardware wallet için, yoksay |
-| `Wallet key file not found` | `~/.seismic-wallet/dev.key` oluştur, izinleri `chmod 600` yap |
+Aşağıdaki tüm hatalar bu rehberi hazırlarken **gerçek olarak yaşandı** ve burada çözümleriyle birlikte belgelendi:
+
+| # | Hata | Sebep | Çözüm |
+|---|---|---|---|
+| 1 | `Address not funded` | Faucet henüz token göndermedi veya yanlış adres | Faucet'ten SIZE iste, 24h cooldown'a dikkat |
+| 2 | `scast balance 0` (eski RPC) | `gcp-1.seismictest.net` artık aktif değil | RPC URL'i `https://testnet-1.seismictest.net/rpc` olmalı |
+| 3 | `Failed to estimate gas: execution reverted` | Fonksiyon imzasında yanlış tip | `increment(uint256)` yerine `increment(suint256)` kullan |
+| 4 | `command not found: sfoundryup` | PATH henüz yüklenmedi | `source ~/.zshenv` çalıştır veya yeni terminal aç |
+| 5 | `libusb not found` warning | Hardware wallet driver eksik | Devnet için gerek yok, yoksay |
+| 6 | `Wallet key file not found at ~/.seismic-wallet/dev.key` | Cüzdan dosyası oluşturulmamış | `mkdir -p ~/.seismic-wallet && nano ~/.seismic-wallet/dev.key` |
+| 7 | Cüzdan her deploy'da değişiyor | Default script `scast wallet new` üretiyor | Adım 7'deki kalıcı cüzdan modifikasyonunu uygula |
+| 8 | `faucet-2.seismicdev.net` ulaşılmıyor | Eski devnet URL'i | Yeni faucet: `https://faucet.seismictest.net/` |
+| 9 | `Error: encode length mismatch` (zsh) | bash array syntax'ı zsh'de farklı | bash array kullanmak yerine tek tek tx at veya açık `for i in 1 2 3` döngüsü kullan |
+| 10 | `sforge build` Error 10109 | Compiler değişti: shielded type mapping key olarak kullanılamaz | Bu repo'da bug; [issue #10](https://github.com/SeismicSystems/prototypes/issues/10) açıldı |
 
 ## 🔗 Faydalı Linkler
 
