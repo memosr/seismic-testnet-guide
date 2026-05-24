@@ -20,12 +20,13 @@ Seismic, **şifreli (encrypted) akıllı kontratlar** için tasarlanmış, EVM u
 
 ##  Kanıt — Bu Rehberin Çıktısı
 
-Bu rehberi takip ederek **2 farklı şifreli kontrat** deploy edildi ve **18+ on-chain transaction** ile etkileşim doğrulandı:
+Bu rehberi takip ederek **3 farklı şifreli kontrat** deploy edildi ve **26+ on-chain transaction** ile etkileşim doğrulandı:
 
-| Kontrat | Adres | Threshold | Explorer |
+| Kontrat | Adres | Tip | Explorer |
 |---|---|---|---|
-| **Counter #1** | `0xBc6a061A02F46dA8E075b22461EA7699ECb3e87F` | 5 | [Görüntüle](https://seismic-testnet.socialscan.io/address/0xBc6a061A02F46dA8E075b22461EA7699ECb3e87F) |
-| **Counter #2** | `0x3561cF5EB9e2307Ead367E71cdCDdE121D463DA1` | 10 | [Görüntüle](https://seismic-testnet.socialscan.io/address/0x3561cF5EB9e2307Ead367E71cdCDdE121D463DA1) |
+| **Counter #1** | `0xBc6a061A02F46dA8E075b22461EA7699ECb3e87F` | Counter (threshold 5) | [Görüntüle](https://seismic-testnet.socialscan.io/address/0xBc6a061A02F46dA8E075b22461EA7699ECb3e87F) |
+| **Counter #2** | `0x3561cF5EB9e2307Ead367E71cdCDdE121D463DA1` | Counter (threshold 10) | [Görüntüle](https://seismic-testnet.socialscan.io/address/0x3561cF5EB9e2307Ead367E71cdCDdE121D463DA1) |
+| **PrivatePledgeTracker** | `0xf125426b2b2C6d8B9aca9d9bE0a399a89Dd60886` | Özgün — shielded pledge accounting | [Görüntüle](https://seismic-testnet.socialscan.io/address/0xf125426b2b2C6d8B9aca9d9bE0a399a89Dd60886) |
 
 **Network:** Seismic Testnet (Chain ID: `5124`) · **RPC:** `https://testnet-1.seismictest.net/rpc`
 
@@ -331,6 +332,112 @@ scast call --rpc-url $RPC $CONTRACT "getNumber()(uint256)"
 
  **İşte bu!** 5 increment yaptın, blockchain hiçbirinin değerini bilmiyor, ama toplam **doğru** çıktı. Bu Seismic'in encrypted state mekanizmasının kanıtı.
 
+## 🚀 İleri Seviye — Kendi Özgün Kontratını Yaz
+
+`Counter.sol` tutorial seviyesinde. Gerçek bir use case yaratmak istiyorsan kendi şifreli kontratını yazabilirsin. Bu rehberi yazarken bunu da yaptık: **PrivatePledgeTracker** adında bağış taahhütlerini şifreli tutan bir kontrat.
+
+### Tasarım Felsefesi
+
+Üç tür state var:
+- 🌐 **Public** → `address public owner` gibi, herkesin görmesi anlamlı bilgi
+- 🔒 **Shielded** → `suint256 private totalPledged` gibi, sadece kontratın yetkili fonksiyonları okuyabilir
+- 🟡 **Hybrid** → `hasPledged(address) → bool` — "kim taahhüt etti" public ama "ne kadar" gizli
+
+### Tam Kontrat Örneği
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.13;
+
+contract PrivatePledgeTracker {
+    address public owner;
+    suint256 private totalPledged;
+    mapping(address => suint256) private pledges;
+
+    event Pledged(address indexed pledger);
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not owner");
+        _;
+    }
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    function pledge(suint256 amount) public {
+        require(uint256(amount) > 0, "Empty pledge");
+        pledges[msg.sender] += amount;
+        totalPledged += amount;
+        emit Pledged(msg.sender);
+    }
+
+    function myPledge() public view returns (uint256) {
+        return uint256(pledges[msg.sender]);
+    }
+
+    function getTotalPledged() public view onlyOwner returns (uint256) {
+        return uint256(totalPledged);
+    }
+
+    function hasPledged(address pledger) public view returns (bool) {
+        return uint256(pledges[pledger]) > 0;
+    }
+}
+```
+
+### Privacy Model — Net Gösterim
+
+Bu kontratta 4 farklı bağış yaptık: **100, 50, 250, 75** (toplam 475). Sonuçlar:
+
+| Sorgu | Sonuç | Anlamı |
+|---|---|---|
+| `hasPledged(senin_adres)` | `true` | 🌐 Public — kim taahhüt etti görünür |
+| `myPledge()` (off-chain caller) | `0` | 🔒 **`msg.sender = 0x0` olduğu için 0 görünür** — gerçek miktar gizli |
+| `eth_getStorageAt(slot 1)` | `0x0000...0000` | 🔒 **Storage layer'da bile şifreli!** Direkt okuyup 475 göremezsin |
+| `scast balance kontrat` | gerçek SIZE balance | 🌐 Public — gas bilgisi her zaman public |
+
+> **🎯 Büyük zafer:** Standart Ethereum'da `eth_getStorageAt(slot 1)` çağırsan **475** görürdün. Seismic'te `0x0` görüyorsun — `suint256` storage slot seviyesinde gerçekten şifreli.
+
+### Önemli Tasarım Notu — `payable` Kullanma!
+
+İlk denemede `donate() payable` ve `suint256(msg.value)` kullanmıştık. Sonuç:
+
+- ⚠️ Compiler uyardı: `msg.value is always publicly visible on-chain. Assigning it to a shielded type does not hide the transaction value from observers.`
+- ❌ Validator simülasyonda revert gördü, TX mempool'da takıldı
+- ❌ Out-of-gas hatası verdi (515K gas yetmedi)
+
+**Doğru yaklaşım:** `payable` yerine kullanıcıdan **`suint256 amount` parametresi** al. Gerçek SIZE transferi gerekiyorsa bunu off-chain veya ayrı bir fonksiyonda yap. Çünkü `msg.value` zaten tx metadata'sında public — onu shielded yapmaya çalışmak yanıltıcıdır.
+
+### Deploy Komutu (Cömert Gas ile)
+
+```bash
+sforge create --rpc-url $RPC --private-key $PRIVKEY --broadcast \
+  --gas-limit 3000000 \
+  --gas-price 5000000000 \
+  --priority-gas-price 2000000000 \
+  "src/PrivatePledgeTracker.sol:PrivatePledgeTracker"
+```
+
+> ⚠️ **Düşük gas/priority ile TX mempool'da takılır.** Seismic testnet validator'ları minimum 1-2 Gwei priority bekliyor. Eğer "replacement transaction underpriced" hatası alırsan gas price'ı yükselt.
+
+### Pledge Et + Encrypted State'i Oku
+
+```bash
+PLEDGE=<deploy_ettiğin_adres>
+
+# Pledge at (amount=100, gizli)
+scast send --rpc-url $RPC --private-key $PRIVKEY \
+  --gas-limit 200000 --gas-price 5000000000 --priority-gas-price 2000000000 \
+  $PLEDGE "pledge(suint256)" 100
+
+# Public membership check
+scast call --rpc-url $RPC $PLEDGE "hasPledged(address)(bool)" <senin_adresin>
+
+# Storage slot (encrypted, 0 görmeli — bu doğru!)
+scast storage $PLEDGE 1 --rpc-url $RPC
+```
+
 ##  Sık Karşılaşılan Hatalar
 
 Aşağıdaki tüm hatalar bu rehberi hazırlarken **gerçek olarak yaşandı** ve burada çözümleriyle birlikte belgelendi:
@@ -347,6 +454,7 @@ Aşağıdaki tüm hatalar bu rehberi hazırlarken **gerçek olarak yaşandı** v
 | 8 | `faucet-2.seismicdev.net` ulaşılmıyor | Eski devnet URL'i | Yeni faucet: `https://faucet.seismictest.net/` |
 | 9 | `Error: encode length mismatch` (zsh) | bash array syntax'ı zsh'de farklı | bash array kullanmak yerine tek tek tx at veya açık `for i in 1 2 3` döngüsü kullan |
 | 10 | `sforge build` Error 10109 | Compiler değişti: shielded type mapping key olarak kullanılamaz | Bu repo'da bug; [issue #10](https://github.com/SeismicSystems/prototypes/issues/10) açıldı |
+| 11 | `donate()` payable + `suint256(msg.value)` çalışmıyor | Compiler uyarısı: `msg.value` zaten public, shielded'a cast'lemek anlamsız | `payable` yerine `pledge(suint256 amount)` gibi parametre al, gerçek transfer off-chain veya ayrı fonksiyonda |
 
 ## 🔗 Faydalı Linkler
 
