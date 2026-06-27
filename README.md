@@ -5,9 +5,9 @@
 [![Language](https://img.shields.io/badge/lang-Türkçe-red)](https://github.com/memosr/seismic-testnet-guide)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-Seismic, **şifreli (encrypted) akıllı kontratlar** için tasarlanmış, EVM uyumlu bir Layer 1 blockchain'dir. Bu rehber, Seismic Testnet üzerinde **kendi şifreli kontratını deploy etmeyi** adım adım anlatır — fintech, gizli oylama, gizli DeFi gibi use case'lerin temeli.
+Seismic, **şifreli -encrypted- akıllı kontratlar** için tasarlanmış, EVM uyumlu bir Layer 1 blockchain dir. Bu rehber Seismic Testnet üzerinde **kendi şifreli kontratını deploy etmeyi** adım adım anlatır - fintech, gizli oylama, gizli DeFi gibi use case'lerin temeli. Hızlıca başla...
 
-##  Bu Rehberde Ne Yapacaksın?
+##  Bu Rehberde Sayesinde Neler Yapacaksın?
 
 - ✅ macOS'ta Seismic dev araçlarını (sforge, sanvil, scast) kuracaksın
 - ✅ Yeni bir dev wallet üreteceksin
@@ -16,9 +16,9 @@ Seismic, **şifreli (encrypted) akıllı kontratlar** için tasarlanmış, EVM u
 - ✅ 5 adet **şifreli increment transaction** atacaksın
 - ✅ Threshold aşıldığında **gizli değeri açıklayacaksın**
 
-**Sonuç:** ~10 dakikada 6 on-chain transaction, encrypted smart contract deneyimi.
+**Sonuç:** ~10 dakikada 6 on-chain transaction, encrypted smart contract deneyimi. Hızlı...
 
-##  Kanıt — Bu Rehberin Çıktısı
+##  Delil — Bu Rehberin Çıktısı
 
 Bu rehberi takip ederek **3 farklı şifreli kontrat** deploy edildi ve **26+ on-chain transaction** ile etkileşim doğrulandı:
 
@@ -30,7 +30,7 @@ Bu rehberi takip ederek **3 farklı şifreli kontrat** deploy edildi ve **26+ on
 
 **Network:** Seismic Testnet (Chain ID: `5124`) · **RPC:** `https://testnet-1.seismictest.net/rpc`
 
-## 📋 Ön Gereksinimler
+## 📋 Ön Gereksinimler.
 
 - **İşletim Sistemi:** macOS (M1/M2/M3) veya Linux. Windows için WSL2 gerekir.
 - **Homebrew:** macOS paket yöneticisi → [brew.sh](https://brew.sh)
