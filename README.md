@@ -1,4 +1,4 @@
-#  Seismic Testnet — Encrypted Smart Contract Deploy Rehberi
+#  Seismic Testnet - Encrypted Smart Contract Deploy Rehberi
 
 [![Network](https://img.shields.io/badge/network-Seismic%20Testnet-purple)](https://docs.seismic.systems)
 [![Chain ID](https://img.shields.io/badge/chain%20id-5124-blue)](https://seismic-testnet.socialscan.io)
@@ -386,7 +386,7 @@ contract PrivatePledgeTracker {
 }
 ```
 
-### Privacy Model — Net Gösterim
+### Privacy Model - Net Gösterim
 
 Bu kontratta 4 farklı bağış yaptık: **100, 50, 250, 75** (toplam 475). Sonuçlar:
 
@@ -468,8 +468,4 @@ Aşağıdaki tüm hatalar bu rehberi hazırlarken **gerçek olarak yaşandı** v
 
 ## 📜 Lisans
 
-MIT — kullan, fork'la, kendi rehberini yap.
-
----
-
-**Bu rehber topluluğa katkı amacıyla hazırlanmıştır.** Bir hata bulursan ya da iyileştirme önerin varsa **issue** veya **pull request** açabilirsin.
+Fork'la, takip et ve kendi rehberini düzenle.
