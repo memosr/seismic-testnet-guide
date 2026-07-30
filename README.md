@@ -1,57 +1,59 @@
-#  Seismic Testnet - Encrypted Smart Contract Deploy Rehberi
+# Seismic Testnet: Şifreli Kontrat Deploy Rehberi
 
 [![Network](https://img.shields.io/badge/network-Seismic%20Testnet-purple)](https://docs.seismic.systems)
 [![Chain ID](https://img.shields.io/badge/chain%20id-5124-blue)](https://seismic-testnet.socialscan.io)
-[![Language](https://img.shields.io/badge/lang-Türkçe-red)](https://github.com/memosr/seismic-testnet-guide)
+[![Language](https://img.shields.io/badge/lang-T%C3%BCrk%C3%A7e-red)](https://github.com/memosr/seismic-testnet-guide)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-Seismic, **şifreli -encrypted- akıllı kontratlar** için tasarlanmış, EVM uyumlu bir Layer 1 blockchain dir. Bu rehber Seismic Testnet üzerinde **kendi şifreli kontratını deploy etmeyi** adım adım anlatır - fintech, gizli oylama, gizli DeFi gibi use case'lerin temeli. Hızlıca başla...
+Seismic, şifreli (encrypted) akıllı kontratlar için tasarlanmış EVM uyumlu bir Layer 1 blockchain. Bu rehber Seismic Testnet üzerinde kendi şifreli kontratını deploy etmeyi anlatıyor. Gizli oylama, gizli DeFi, fintech gibi use case'lerin temeli bu.
 
-##  Bu Rehberde Sayesinde Neler Yapacaksın?
+Rehberi macOS'ta baştan sona uygulayıp yaşadığım hataları da not aldım, o yüzden yer yer "burada takıldım" tipi uyarılar göreceksin.
 
-- ✅ macOS'ta Seismic dev araçlarını (sforge, sanvil, scast) kuracaksın
-- ✅ Yeni bir dev wallet üreteceksin
-- ✅ Faucet'ten SIZE (gas token) alacaksın
-- ✅ Şifreli bir `Counter` kontratı deploy edeceksin
-- ✅ 5 adet **şifreli increment transaction** atacaksın
-- ✅ Threshold aşıldığında **gizli değeri açıklayacaksın**
+## Ne yapacaksın
 
-**Sonuç:** ~10 dakikada 6 on-chain transaction, encrypted smart contract deneyimi. Hızlı...
+- macOS'ta Seismic dev araçlarını kuracaksın (`sforge`, `sanvil`, `scast`)
+- Kalıcı bir dev wallet üreteceksin
+- Faucet'ten SIZE (gas token) alacaksın
+- Şifreli bir `Counter` kontratı deploy edeceksin
+- 5 tane şifreli increment transaction atacaksın
+- Threshold aşıldığında gizli değeri açıklayacaksın
 
-##  Delil — Bu Rehberin Çıktısı
+Toplamda yaklaşık 10 dakika ve 6 on-chain transaction.
 
-Bu rehberi takip ederek **3 farklı şifreli kontrat** deploy edildi ve **26+ on-chain transaction** ile etkileşim doğrulandı:
+## Rehberin çıktısı
+
+Bu adımları takip ederek 3 farklı şifreli kontrat deploy edildi ve 26+ transaction ile etkileşim doğrulandı.
 
 | Kontrat | Adres | Tip | Explorer |
-|---|---|---|---|
-| **Counter #1** | `0xBc6a061A02F46dA8E075b22461EA7699ECb3e87F` | Counter (threshold 5) | [Görüntüle](https://seismic-testnet.socialscan.io/address/0xBc6a061A02F46dA8E075b22461EA7699ECb3e87F) |
-| **Counter #2** | `0x3561cF5EB9e2307Ead367E71cdCDdE121D463DA1` | Counter (threshold 10) | [Görüntüle](https://seismic-testnet.socialscan.io/address/0x3561cF5EB9e2307Ead367E71cdCDdE121D463DA1) |
-| **PrivatePledgeTracker** | `0xf125426b2b2C6d8B9aca9d9bE0a399a89Dd60886` | Özgün — shielded pledge accounting | [Görüntüle](https://seismic-testnet.socialscan.io/address/0xf125426b2b2C6d8B9aca9d9bE0a399a89Dd60886) |
+| --- | --- | --- | --- |
+| Counter #1 | `0xBc6a061A02F46dA8E075b22461EA7699ECb3e87F` | Counter (threshold 5) | [Görüntüle](https://seismic-testnet.socialscan.io/address/0xBc6a061A02F46dA8E075b22461EA7699ECb3e87F) |
+| Counter #2 | `0x3561cF5EB9e2307Ead367E71cdCDdE121D463DA1` | Counter (threshold 10) | [Görüntüle](https://seismic-testnet.socialscan.io/address/0x3561cF5EB9e2307Ead367E71cdCDdE121D463DA1) |
+| PrivatePledgeTracker | `0xf125426b2b2C6d8B9aca9d9bE0a399a89Dd60886` | Shielded pledge accounting | [Görüntüle](https://seismic-testnet.socialscan.io/address/0xf125426b2b2C6d8B9aca9d9bE0a399a89Dd60886) |
 
-**Network:** Seismic Testnet (Chain ID: `5124`) · **RPC:** `https://testnet-1.seismictest.net/rpc`
+Network: Seismic Testnet (Chain ID `5124`), RPC: `https://testnet-1.seismictest.net/rpc`
 
-## 📋 Ön Gereksinimler.
+## Ön gereksinimler
 
-- **İşletim Sistemi:** macOS (M1/M2/M3) veya Linux. Windows için WSL2 gerekir.
-- **Homebrew:** macOS paket yöneticisi → [brew.sh](https://brew.sh)
-- **GitHub hesabı:** Minimum **10 takipçi** (faucet için zorunlu)
-- **Disk alanı:** ~500 MB
-- **Süre:** İlk kurulum 30 dk, deploy 15 dk
+- İşletim sistemi: macOS (M1/M2/M3) veya Linux. Windows'ta WSL2 gerekiyor.
+- Homebrew: [brew.sh](https://brew.sh)
+- GitHub hesabı: faucet en az 10 takipçi istiyor
+- Disk alanı: ~500 MB
+- Süre: ilk kurulum 30 dk, deploy 15 dk
 
-##  Adım 1 — Sistem Kontrolü
+## Adım 1: Sistem kontrolü
 
-Terminalde mevcut araçları kontrol et:
+Mevcut araçları kontrol et:
 
 ```bash
-echo "=== Homebrew ===" && brew --version 2>/dev/null || echo "❌ YOK"
-echo "=== Git ===" && git --version 2>/dev/null || echo "❌ YOK"
-echo "=== Rust ===" && rustc --version 2>/dev/null || echo "❌ YOK"
-echo "=== Bun ===" && bun --version 2>/dev/null || echo "❌ YOK"
+echo "=== Homebrew ===" && brew --version 2>/dev/null || echo "YOK"
+echo "=== Git ===" && git --version 2>/dev/null || echo "YOK"
+echo "=== Rust ===" && rustc --version 2>/dev/null || echo "YOK"
+echo "=== Bun ===" && bun --version 2>/dev/null || echo "YOK"
 ```
 
-Eksik olanlar varsa Adım 2-3'te kuracağız.
+Eksik olanları Adım 2 ve 3'te kuracağız.
 
-##  Adım 2 — Rust Kurulumu
+## Adım 2: Rust kurulumu
 
 Rust, Seismic'in custom Foundry'sini compile etmek için gerekli.
 
@@ -59,7 +61,7 @@ Rust, Seismic'in custom Foundry'sini compile etmek için gerekli.
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-İnteraktif menü çıkacak. **Enter** tuşuna bas (default kurulum).
+İnteraktif menü çıkacak, default kurulum için Enter'a bas.
 
 Kurulum bitince:
 
@@ -68,9 +70,9 @@ source "$HOME/.cargo/env"
 rustc --version && cargo --version
 ```
 
-##  Adım 3 — Seismic Foundry (sfoundryup) Kurulumu
+## Adım 3: Seismic Foundry (sfoundryup) kurulumu
 
-Seismic'in özel Foundry araç setini yükleyen yükleyici.
+Önce yükleyiciyi kur:
 
 ```bash
 curl -L \
@@ -78,9 +80,7 @@ curl -L \
   "https://api.github.com/repos/SeismicSystems/seismic-foundry/contents/sfoundryup/install?ref=seismic" | bash
 ```
 
-Script otomatik olarak shell'ini (zsh/bash) tespit edip PATH'e ekler.
-
-PATH'i mevcut terminale yükle:
+Script shell'ini (zsh/bash) otomatik tespit edip PATH'e ekliyor. PATH'i mevcut terminale yükle:
 
 ```bash
 source ~/.zshenv
@@ -93,11 +93,11 @@ Sonra asıl araçları kur (`sforge`, `sanvil`, `scast`):
 sfoundryup
 ```
 
-> ⚠️ **Sudo şifresi sorabilir** — `ssolc` (Seismic Solidity compiler) `/usr/local/bin/` dizinine kurulduğu için Mac kullanıcı şifreni isteyecek.
+Burada sudo şifresi sorabilir. `ssolc` (Seismic Solidity compiler) `/usr/local/bin/` dizinine kurulduğu için Mac kullanıcı şifreni istiyor.
 
-##  Adım 4 — try-devnet Repo'sunu Klonla
+## Adım 4: try-devnet repo'sunu klonla
 
-Seismic'in resmi örnek kontratlarını içeren repo:
+Seismic'in resmi örnek kontratları bu repo'da:
 
 ```bash
 mkdir -p ~/seismic-workspace && cd ~/seismic-workspace
@@ -105,7 +105,7 @@ git clone --recurse-submodules https://github.com/SeismicSystems/try-devnet.git
 cd try-devnet
 ```
 
->  **Önemli — Config Güncelleme Gerek:** Bu repo'daki `config.sh` dosyası **eski devnet URL'lerini** kullanıyor. Yeni testnet için güncelleyelim.
+Repo'daki `config.sh` eski devnet URL'lerini kullanıyor, yeni testnet için güncellemek gerekiyor:
 
 ```bash
 cat > config.sh << 'EOF'
@@ -117,47 +117,45 @@ EXPLORER_URL="https://seismic-testnet.socialscan.io"
 EOF
 ```
 
-##  Adım 5 — Kalıcı Dev Wallet Üret
+## Adım 5: Kalıcı dev wallet üret
 
-`try-devnet/packages/contract/script/deploy.sh` her seferinde **yeni** cüzdan üretiyor. Bu yüzden faucet'ten alınan tokenler kaybolur. Kalıcı bir cüzdan yapacağız.
+`try-devnet/packages/contract/script/deploy.sh` her çalıştığında yeni cüzdan üretiyor, dolayısıyla faucet'ten aldığın tokenler boşa gidiyor. Kalıcı bir cüzdan yapalım:
 
 ```bash
 scast wallet new
 ```
 
-Çıktı şuna benzer:
+Çıktı şuna benziyor:
 
 ```
 Successfully created new keypair.
-Address:     0x... 
+Address:     0x...
 Private key: 0x...
 ```
 
-⚠️ **GÜVENLİK:** Private key'ini **kimseyle paylaşma**, ekrandan da kapat. Şimdi güvenli bir yere kaydet:
+Private key'ini kimseyle paylaşma ve ekrandan kapat. Güvenli bir yere kaydet:
 
 ```bash
 mkdir -p ~/.seismic-wallet && chmod 700 ~/.seismic-wallet
 nano ~/.seismic-wallet/dev.key
 ```
 
-Nano editörü açılınca **private key'i yapıştır**, sonra `Ctrl+O` → `Enter` → `Ctrl+X`.
-
-İzinleri kilitle:
+Nano açılınca private key'i yapıştır, sonra `Ctrl+O`, `Enter`, `Ctrl+X`. Ardından izinleri kilitle:
 
 ```bash
 chmod 600 ~/.seismic-wallet/dev.key
 ```
 
-##  Adım 6 — Faucet'ten SIZE Al
+## Adım 6: Faucet'ten SIZE al
 
-Tarayıcıdan: **https://faucet.seismictest.net/**
+Tarayıcıdan <https://faucet.seismictest.net/> adresine git:
 
-1. **GitHub ile login** (>10 takipçi gerekli)
+1. GitHub ile login ol (10+ takipçi gerekiyor)
 2. Cüzdan adresini yapıştır
 3. "Request Tokens" butonuna bas
-4. **10 SIZE** düşecek
+4. 10 SIZE düşecek
 
->  **Cooldown:** Her cüzdan için **24 saatte 1 kez** talep edebilirsin.
+Her cüzdan 24 saatte bir kez talep edebiliyor.
 
 Doğrulama:
 
@@ -165,13 +163,13 @@ Doğrulama:
 scast balance <CÜZDAN_ADRESİN> --rpc-url https://testnet-1.seismictest.net/rpc
 ```
 
-`10000000000000000000` (10 × 10^18 wei = 10 SIZE) görmelisin.
+`10000000000000000000` görmelisin (10 × 10^18 wei = 10 SIZE).
 
->  **Yaygın Hata — RPC URL:** Eski docs'ta `gcp-1.seismictest.net` URL'i geçiyor, **çalışmıyor** (balance 0 dönüyor). Doğrusu: `testnet-1.seismictest.net/rpc`
+Not: eski dokümanlarda geçen `gcp-1.seismictest.net` URL'i çalışmıyor, balance 0 dönüyor. Doğrusu `testnet-1.seismictest.net/rpc`.
 
-##  Adım 7 — Deploy Script'ini Modifiye Et
+## Adım 7: Deploy script'ini modifiye et
 
-`try-devnet/packages/contract/script/deploy.sh` script'i her seferinde yeni cüzdan üretiyor. Bizim kalıcı cüzdanı kullanacak şekilde düzenleyelim.
+Script'i kalıcı cüzdanı kullanacak şekilde düzenleyelim. Önce yedek al:
 
 ```bash
 cd ~/seismic-workspace/try-devnet/packages/contract
@@ -243,20 +241,20 @@ print_success "Success. You just deployed your first contract on Seismic!"
 EOF
 ```
 
-##  Adım 8 — Deploy!
+## Adım 8: Deploy
 
 ```bash
 bash script/deploy.sh
 ```
 
-**Press Enter** uyarısında Enter'a bas. ~10-30 saniye içinde:
+"Press Enter" uyarısında Enter'a bas. 10-30 saniye içinde şöyle bir çıktı gelecek:
 
 ```
 Using wallet: 0x...
 Balance: 10000000000000000000 wei
 
 Step 1: Deploying contract
-✅ Success.
+Success.
 
 Step 2: Summarizing deployment
 Contract Address: 0x...
@@ -264,16 +262,16 @@ Transaction Hash: 0x...
 Contract Link: https://seismic-testnet.socialscan.io/address/0x...
 ```
 
- Kontratın canlı! Explorer linkine tıkla, ziyaret et.
+Kontrat canlı. Explorer linkine tıklayıp bakabilirsin.
 
-##  Adım 9 — Counter Kontratı Anlamak
+## Adım 9: Counter kontratını anlamak
 
-Deploy ettiğin `Counter.sol` kontratı şu yapıda:
+Deploy ettiğin `Counter.sol` şu yapıda:
 
 ```solidity
 contract Counter {
-  suint256 private number;    // 🔒 ŞİFRELİ sayaç (kimse göremez)
-  uint256 public threshold;   // 🌐 PUBLIC eşik (herkes görür)
+  suint256 private number;    // şifreli sayaç, kimse göremez
+  uint256 public threshold;   // public eşik, herkes görür
 
   function increment(suint256 amount) public { number += amount; }
   function getNumber() public view isThresholdReached returns (uint256) {
@@ -287,9 +285,9 @@ contract Counter {
 }
 ```
 
-**Anahtar nokta:** `suint256` Seismic'in **shielded uint** tipidir. Standart `uint256`'ya `s` prefix'i eklenince blockchain üzerinde **şifreli** depolanır. Kimse ne `number`'ı görebilir ne de `increment`'lerin değerini.
+Anahtar nokta `suint256`. Bu Seismic'in shielded uint tipi. Standart `uint256`'ya `s` prefix'i eklendiğinde değer blockchain üzerinde şifreli depolanıyor. Ne `number`'ı ne de increment'lerin değerini kimse göremiyor.
 
-##  Adım 10 — Şifreli Etkileşim
+## Adım 10: Şifreli etkileşim
 
 Değişkenleri ayarla:
 
@@ -299,15 +297,15 @@ PRIVKEY=$(cat ~/.seismic-wallet/dev.key | tr -d '[:space:]')
 RPC=https://testnet-1.seismictest.net/rpc
 ```
 
-İlk increment'i çağır (gizli 1 ekle):
+İlk increment (gizli 1 ekle):
 
 ```bash
 scast send --rpc-url $RPC --private-key $PRIVKEY $CONTRACT "increment(suint256)" 1
 ```
 
->  **Yaygın Hata:** `increment(uint256)` yazarsan **revert** alırsın. Doğrusu **`increment(suint256)`** — shielded type.
+Burada `increment(uint256)` yazarsan revert alırsın. Fonksiyon imzası `increment(suint256)` olmalı.
 
-4 increment daha (toplam 5):
+4 increment daha, toplam 5:
 
 ```bash
 for i in 1 2 3 4; do
@@ -316,9 +314,9 @@ for i in 1 2 3 4; do
 done
 ```
 
-##  Adım 11 — Şifreyi Aç!
+## Adım 11: Şifreyi aç
 
-Threshold (5) aşıldı, `getNumber()` artık çalışmalı:
+Threshold (5) aşıldığı için `getNumber()` artık çalışmalı:
 
 ```bash
 scast call --rpc-url $RPC $CONTRACT "getNumber()(uint256)"
@@ -330,20 +328,21 @@ scast call --rpc-url $RPC $CONTRACT "getNumber()(uint256)"
 5
 ```
 
- **İşte bu!** 5 increment yaptın, blockchain hiçbirinin değerini bilmiyor, ama toplam **doğru** çıktı. Bu Seismic'in encrypted state mekanizmasının kanıtı.
+5 increment attın, blockchain hiçbirinin değerini bilmiyor ama toplam doğru çıkıyor. Seismic'in encrypted state mekanizması tam olarak bu.
 
-## 🚀 İleri Seviye — Kendi Özgün Kontratını Yaz
+## İleri seviye: kendi kontratını yaz
 
-`Counter.sol` tutorial seviyesinde. Gerçek bir use case yaratmak istiyorsan kendi şifreli kontratını yazabilirsin. Bu rehberi yazarken bunu da yaptık: **PrivatePledgeTracker** adında bağış taahhütlerini şifreli tutan bir kontrat.
+`Counter.sol` tutorial seviyesinde. Gerçek bir use case denemek istersen kendi şifreli kontratını yazabilirsin. Ben rehberi hazırlarken bunu da yaptım: bağış taahhütlerini şifreli tutan `PrivatePledgeTracker`.
 
-### Tasarım Felsefesi
+### Tasarım yaklaşımı
 
 Üç tür state var:
-- 🌐 **Public** → `address public owner` gibi, herkesin görmesi anlamlı bilgi
-- 🔒 **Shielded** → `suint256 private totalPledged` gibi, sadece kontratın yetkili fonksiyonları okuyabilir
-- 🟡 **Hybrid** → `hasPledged(address) → bool` — "kim taahhüt etti" public ama "ne kadar" gizli
 
-### Tam Kontrat Örneği
+- Public: `address public owner` gibi, herkesin görmesi anlamlı bilgi
+- Shielded: `suint256 private totalPledged` gibi, sadece kontratın yetkili fonksiyonları okuyabilir
+- Hybrid: `hasPledged(address) → bool` gibi, "kim taahhüt etti" public ama "ne kadar" gizli
+
+### Kontrat
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -386,30 +385,30 @@ contract PrivatePledgeTracker {
 }
 ```
 
-### Privacy Model - Net Gösterim
+### Privacy modeli pratikte
 
-Bu kontratta 4 farklı bağış yaptık: **100, 50, 250, 75** (toplam 475). Sonuçlar:
+Bu kontrata 4 bağış yaptım: 100, 50, 250, 75 (toplam 475). Sorgu sonuçları:
 
 | Sorgu | Sonuç | Anlamı |
-|---|---|---|
-| `hasPledged(senin_adres)` | `true` | 🌐 Public — kim taahhüt etti görünür |
-| `myPledge()` (off-chain caller) | `0` | 🔒 **`msg.sender = 0x0` olduğu için 0 görünür** — gerçek miktar gizli |
-| `eth_getStorageAt(slot 1)` | `0x0000...0000` | 🔒 **Storage layer'da bile şifreli!** Direkt okuyup 475 göremezsin |
-| `scast balance kontrat` | gerçek SIZE balance | 🌐 Public — gas bilgisi her zaman public |
+| --- | --- | --- |
+| `hasPledged(senin_adres)` | `true` | Public, kim taahhüt etti görünüyor |
+| `myPledge()` (off-chain caller) | `0` | `msg.sender = 0x0` olduğu için 0 dönüyor, gerçek miktar gizli |
+| `eth_getStorageAt(slot 1)` | `0x0000...0000` | Storage layer'da bile şifreli, direkt okuyup 475 göremiyorsun |
+| `scast balance kontrat` | gerçek SIZE balance | Public, gas bilgisi her zaman public |
 
-> **🎯 Büyük zafer:** Standart Ethereum'da `eth_getStorageAt(slot 1)` çağırsan **475** görürdün. Seismic'te `0x0` görüyorsun — `suint256` storage slot seviyesinde gerçekten şifreli.
+Asıl önemli kısım burada: standart Ethereum'da `eth_getStorageAt(slot 1)` çağırsan 475 görürdün. Seismic'te `0x0` görüyorsun, yani `suint256` storage slot seviyesinde gerçekten şifreli.
 
-### Önemli Tasarım Notu — `payable` Kullanma!
+### payable kullanma
 
-İlk denemede `donate() payable` ve `suint256(msg.value)` kullanmıştık. Sonuç:
+İlk denememde `donate() payable` ve `suint256(msg.value)` kullandım. Sonuç:
 
-- ⚠️ Compiler uyardı: `msg.value is always publicly visible on-chain. Assigning it to a shielded type does not hide the transaction value from observers.`
-- ❌ Validator simülasyonda revert gördü, TX mempool'da takıldı
-- ❌ Out-of-gas hatası verdi (515K gas yetmedi)
+- Compiler uyardı: `msg.value is always publicly visible on-chain. Assigning it to a shielded type does not hide the transaction value from observers.`
+- Validator simülasyonda revert gördü, TX mempool'da takıldı
+- Out-of-gas hatası verdi (515K gas yetmedi)
 
-**Doğru yaklaşım:** `payable` yerine kullanıcıdan **`suint256 amount` parametresi** al. Gerçek SIZE transferi gerekiyorsa bunu off-chain veya ayrı bir fonksiyonda yap. Çünkü `msg.value` zaten tx metadata'sında public — onu shielded yapmaya çalışmak yanıltıcıdır.
+Doğru yaklaşım: `payable` yerine kullanıcıdan `suint256 amount` parametresi almak. Gerçek SIZE transferi gerekiyorsa bunu off-chain veya ayrı bir fonksiyonda yap. `msg.value` zaten tx metadata'sında public, onu shielded yapmaya çalışmak yanıltıcı oluyor.
 
-### Deploy Komutu (Cömert Gas ile)
+### Deploy komutu
 
 ```bash
 sforge create --rpc-url $RPC --private-key $PRIVKEY --broadcast \
@@ -419,9 +418,9 @@ sforge create --rpc-url $RPC --private-key $PRIVKEY --broadcast \
   "src/PrivatePledgeTracker.sol:PrivatePledgeTracker"
 ```
 
-> ⚠️ **Düşük gas/priority ile TX mempool'da takılır.** Seismic testnet validator'ları minimum 1-2 Gwei priority bekliyor. Eğer "replacement transaction underpriced" hatası alırsan gas price'ı yükselt.
+Gas ve priority değerlerini cömert tuttum, çünkü düşük değerlerle TX mempool'da takılıyor. Seismic testnet validator'ları minimum 1-2 Gwei priority bekliyor. "replacement transaction underpriced" hatası alırsan gas price'ı yükselt.
 
-### Pledge Et + Encrypted State'i Oku
+### Pledge et ve encrypted state'i oku
 
 ```bash
 PLEDGE=<deploy_ettiğin_adres>
@@ -434,38 +433,38 @@ scast send --rpc-url $RPC --private-key $PRIVKEY \
 # Public membership check
 scast call --rpc-url $RPC $PLEDGE "hasPledged(address)(bool)" <senin_adresin>
 
-# Storage slot (encrypted, 0 görmeli — bu doğru!)
+# Storage slot: 0 dönmesi normal, şifreli olduğu anlamına geliyor
 scast storage $PLEDGE 1 --rpc-url $RPC
 ```
 
-##  Sık Karşılaşılan Hatalar
+## Sık karşılaşılan hatalar
 
-Aşağıdaki tüm hatalar bu rehberi hazırlarken **gerçek olarak yaşandı** ve burada çözümleriyle birlikte belgelendi:
+Aşağıdaki hataların hepsini rehberi hazırlarken bizzat yaşadım.
 
 | # | Hata | Sebep | Çözüm |
-|---|---|---|---|
-| 1 | `Address not funded` | Faucet henüz token göndermedi veya yanlış adres | Faucet'ten SIZE iste, 24h cooldown'a dikkat |
-| 2 | `scast balance 0` (eski RPC) | `gcp-1.seismictest.net` artık aktif değil | RPC URL'i `https://testnet-1.seismictest.net/rpc` olmalı |
+| --- | --- | --- | --- |
+| 1 | `Address not funded` | Faucet henüz token göndermedi veya adres yanlış | Faucet'ten SIZE iste, 24h cooldown'a dikkat et |
+| 2 | `scast balance 0` | `gcp-1.seismictest.net` artık aktif değil | RPC URL `https://testnet-1.seismictest.net/rpc` olmalı |
 | 3 | `Failed to estimate gas: execution reverted` | Fonksiyon imzasında yanlış tip | `increment(uint256)` yerine `increment(suint256)` kullan |
 | 4 | `command not found: sfoundryup` | PATH henüz yüklenmedi | `source ~/.zshenv` çalıştır veya yeni terminal aç |
-| 5 | `libusb not found` warning | Hardware wallet driver eksik | Devnet için gerek yok, yoksay |
+| 5 | `libusb not found` uyarısı | Hardware wallet driver eksik | Devnet için gerekmiyor, yoksay |
 | 6 | `Wallet key file not found at ~/.seismic-wallet/dev.key` | Cüzdan dosyası oluşturulmamış | `mkdir -p ~/.seismic-wallet && nano ~/.seismic-wallet/dev.key` |
 | 7 | Cüzdan her deploy'da değişiyor | Default script `scast wallet new` üretiyor | Adım 7'deki kalıcı cüzdan modifikasyonunu uygula |
 | 8 | `faucet-2.seismicdev.net` ulaşılmıyor | Eski devnet URL'i | Yeni faucet: `https://faucet.seismictest.net/` |
-| 9 | `Error: encode length mismatch` (zsh) | bash array syntax'ı zsh'de farklı | bash array kullanmak yerine tek tek tx at veya açık `for i in 1 2 3` döngüsü kullan |
-| 10 | `sforge build` Error 10109 | Compiler değişti: shielded type mapping key olarak kullanılamaz | Bu repo'da bug; [issue #10](https://github.com/SeismicSystems/prototypes/issues/10) açıldı |
-| 11 | `donate()` payable + `suint256(msg.value)` çalışmıyor | Compiler uyarısı: `msg.value` zaten public, shielded'a cast'lemek anlamsız | `payable` yerine `pledge(suint256 amount)` gibi parametre al, gerçek transfer off-chain veya ayrı fonksiyonda |
+| 9 | `Error: encode length mismatch` (zsh) | bash array syntax'ı zsh'de farklı çalışıyor | Array yerine tek tek tx at veya `for i in 1 2 3` döngüsü kullan |
+| 10 | `sforge build` Error 10109 | Compiler değişti, shielded type mapping key olarak kullanılamıyor | Repo'da bug var, [issue #10](https://github.com/SeismicSystems/prototypes/issues/10) açıldı |
+| 11 | `donate()` payable + `suint256(msg.value)` çalışmıyor | `msg.value` zaten public, shielded'a cast'lemek anlamsız | `payable` yerine `pledge(suint256 amount)` gibi parametre al |
 
-## 🔗 Faydalı Linkler
+## Faydalı linkler
 
-- 🌐 **Seismic Resmi:** https://www.seismic.systems
-- 🌐 **Dökümantasyon:** https://docs.seismic.systems
-- 🌐 **GitHub:** https://github.com/SeismicSystems
-- 🌐 **Discord:** https://discord.gg/XSPNseXCvW
-- 🌐 **X (Twitter):** https://x.com/SeismicSys
-- 🌐 **Faucet:** https://faucet.seismictest.net
-- 🌐 **Explorer:** https://seismic-testnet.socialscan.io
+- Seismic: <https://www.seismic.systems>
+- Dokümantasyon: <https://docs.seismic.systems>
+- GitHub: <https://github.com/SeismicSystems>
+- Discord: <https://discord.gg/XSPNseXCvW>
+- X: <https://x.com/SeismicSys>
+- Faucet: <https://faucet.seismictest.net>
+- Explorer: <https://seismic-testnet.socialscan.io>
 
-## 📜 Lisans
+## Lisans
 
-Fork'la, takip et ve kendi rehberini düzenle.
+MIT. Fork'la, kendine göre düzenle.
